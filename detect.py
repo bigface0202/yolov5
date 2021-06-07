@@ -163,13 +163,14 @@ def detect(opt):
                         )
                         if names[c] == "person":
                             cv2.imwrite("results/{}_{}.png".format(frame_num, j), im0)
-                        # plot_one_box(
-                        #     xyxy,
-                        #     im0,
-                        #     label=label,
-                        #     color=colors(c, True),
-                        #     line_thickness=opt.line_thickness,
-                        # )
+
+                        plot_one_box(
+                            xyxy,
+                            im0,
+                            label=label,
+                            color=colors(c, True),
+                            line_thickness=opt.line_thickness,
+                        )
                         if opt.save_crop:
                             save_one_box(
                                 xyxy,

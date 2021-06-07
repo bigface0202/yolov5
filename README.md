@@ -1,3 +1,23 @@
+# 人が検出されたフレームのみの切り出し
+datasetブランチでは人が検出されたフレームを切り出して、resultsフォルダに保存する機能を追加しています。
+以下のコマンドで実行して下さい。
+```
+python3 detect.py --source 'VIDEO FILE PATH' --view-img
+```
+--view-imgタグは付けても付けなくてもどっちでもいいですが、付けると動画内で人が検出されているかどうかが表示されます。\
+**動画上ではBBoxが付与されて表示されていますが、resultsには生の画像が保存されます**
+
+I added the function which save the image when YOLOv5 detect the person in the dataset branch.
+The detected frames are saved in results directory. This directory is created automatically in the code.
+You can conduct the code as follow:
+```
+python3 detect.py --source 'VIDEO FILE PATH' --view-img
+```
+If you want to see the results of detected movie, you better to add --view_img.\
+**In the result movie, the bounding boxes are displayed but the saved image is not included.**
+
+---
+
 <a align="left" href="https://apps.apple.com/app/id1452689527" target="_blank">
 <img width="800" src="https://user-images.githubusercontent.com/26833433/98699617-a1595a00-2377-11eb-8145-fc674eb9b1a7.jpg"></a>
 &nbsp
