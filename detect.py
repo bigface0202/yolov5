@@ -129,6 +129,7 @@ def detect(opt):
             s += "%gx%g " % img.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if opt.save_crop else im0  # for opt.save_crop
+            img_org = im0.copy()
             if len(det):
                 # Rescale boxes from img_size to im0 size
                 det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
@@ -162,7 +163,10 @@ def detect(opt):
                             )
                         )
                         if names[c] == "person":
-                            cv2.imwrite("results/{}_{}.png".format(frame_num, j), im0)
+                            cv2.imwrite(
+                                "{}/{}_{}.png".format(opt.out_dir, frame_num, j),
+                                img_org,
+                            )
 
                         plot_one_box(
                             xyxy,
@@ -287,6 +291,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--half", type=bool, default=False, help="use FP16 half-precision inference"
+    )
+    parser.add_argument(
+        "--out_dir", type=str, default="results", help="Output image stored directory"
     )
     opt = parser.parse_args()
     print(opt)
