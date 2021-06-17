@@ -97,6 +97,7 @@ def detect(opt):
     count = 0
     person_in_all_frame = int(45000 * opt.person_prob)
     print("Person will be appered {}/{} frames".format(person_in_all_frame, 45000))
+    os.makedirs(opt.out_dir, exist_ok=True)
 
     for path, img, im0s, vid_cap in dataset:
         img = torch.from_numpy(img).to(device)
