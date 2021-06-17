@@ -124,7 +124,9 @@ def detect(opt):
         # Apply Classifier
         if classify:
             pred = apply_classifier(pred, modelc, img, im0s)
-
+        save_probability = random.randrange(
+            person_in_all_frame
+        )  # 45000 = 60sec * 50min * 15FPS
         # Process detections
         for i, det in enumerate(pred):  # detections per image
             if webcam:  # batch_size >= 1
@@ -173,9 +175,6 @@ def detect(opt):
                                 names[c] if opt.hide_conf else f"{names[c]} {conf:.2f}"
                             )
                         )
-                        save_probability = random.randrange(
-                            person_in_all_frame
-                        )  # 45000 = 60sec * 50min * 15FPS
                         if (
                             names[c] == "person" and save_probability < 20
                         ):  # 20 is number of saving images
