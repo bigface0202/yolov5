@@ -2,17 +2,24 @@
 datasetブランチでは人が検出されたフレームを切り出して、resultsフォルダに保存する機能を追加しています。
 以下のコマンドで実行して下さい。
 ```
-python3 detect.py --source 'VIDEO FILE PATH' --out_dir 'OUTPUT IMAGES DIRECTORY' --view-img
+python3 detect.py --source VIDEO_FILE_PATH' --out_dir OUTPUT_IMAGES_DIRECTORY --cam_num CAMERA_NUMBER --person_prob 1 --view-img
 ```
+--person_probを付けると動画全体における人の出現割合を考慮することができます。例えば、全フレームの30％であれば
+```
+--person_prob 0.3
+```
+としてください。 \
+**出現割合を1より低く設定されると画像が保存される確率が増えて、保存される枚数が増えるので気をつけて下さい**
+**現在は全フレーム数を45000(60sec x 60min x 15fps)と仮定しています。**
 --view-imgタグは付けても付けなくてもどっちでもいいですが、付けると動画内で人が検出されているかどうかが表示されます。\
-***--view-imgでは"Chair"など"Person"と異なるクラスも検出されますが、Personが検出された場合のみ画像が保存されます***
+**--view-imgでは"Chair"など"Person"と異なるクラスも検出されますが、Personが検出された場合のみ画像が保存されます** \
 **動画上ではBBoxが付与されて表示されていますが、resultsには生の画像が保存されます**
 
 I added the function which save the image when YOLOv5 detect the person in the dataset branch.
 The detected frames are saved in results directory. This directory is created automatically in the code.
 You can conduct the code as follow:
 ```
-python3 detect.py --source 'VIDEO FILE PATH' --out_dir 'OUTPUT IMAGES DIRECTORY' --view-img
+python3 detect.py --source VIDEO_FILE_PATH' --out_dir OUTPUT_IMAGES_DIRECTORY --cam_num CAMERA_NUMBER --person_prob 1 --view-img
 ```
 If you want to see the results of detected movie, you better to add --view_img.\
 **In the result movie, the bounding boxes are displayed but the saved image is not included.**

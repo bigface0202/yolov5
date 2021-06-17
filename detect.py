@@ -1,5 +1,6 @@
 import argparse
 import os
+import random
 import time
 from pathlib import Path
 
@@ -88,7 +89,16 @@ def detect(opt):
             torch.zeros(1, 3, imgsz, imgsz).to(device).type_as(next(model.parameters()))
         )  # run once
     t0 = time.time()
-    for frame_num, (path, img, im0s, vid_cap) in enumerate(dataset):
+
+    # Random seed for saving the image
+    random.seed(0)
+
+    # Count for saving image
+    count = 0
+    person_in_all_frame = int(45000 * opt.person_prob)
+    print("Person will be appered {}/{} frames".format(person_in_all_frame, 45000))
+
+    for path, img, im0s, vid_cap in dataset:
         img = torch.from_numpy(img).to(device)
         img = img.half() if half else img.float()  # uint8 to fp16/32
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
@@ -162,11 +172,17 @@ def detect(opt):
                                 names[c] if opt.hide_conf else f"{names[c]} {conf:.2f}"
                             )
                         )
-                        if names[c] == "person":
+                        save_probability = random.randrange(
+                            person_in_all_frame
+                        )  # 45000 = 60sec * 50min * 15FPS
+                        if (
+                            names[c] == "person" and save_probability < 20
+                        ):  # 20 is number of saving images
                             cv2.imwrite(
-                                "{}/{}_{}.png".format(opt.out_dir, frame_num, j),
+                                "{}/{}_{}.png".format(opt.out_dir, opt.cam_num, count),
                                 img_org,
                             )
+                            count += 1
 
                         plot_one_box(
                             xyxy,
@@ -295,6 +311,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--out_dir", type=str, default="results", help="Output image stored directory"
     )
+    parser.add_argument("--cam_num", type=str, default="0", help="Camera number")
+    parser.add_argument("--person_prob", type=float, default=1.0, help="Camera number")
     opt = parser.parse_args()
     print(opt)
     check_requirements(exclude=("tensorboard", "pycocotools", "thop"))
