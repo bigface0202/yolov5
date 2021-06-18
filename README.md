@@ -24,6 +24,12 @@ python3 detect.py --source VIDEO_FILE_PATH' --out_dir OUTPUT_IMAGES_DIRECTORY --
 If you want to see the results of detected movie, you better to add --view_img.\
 **In the result movie, the bounding boxes are displayed but the saved image is not included.**
 
+# 切り出した画像を15枚のみランダムで取り出す
+思っていた以上に画像が切り出されてしまったので、こちらのコードを使って15枚のみ取り出して下さい。
+```
+python3 extract_img.py --img_dir results/cam1 --out_dir extracted_img/cam1
+```
+
 ---
 
 <a align="left" href="https://apps.apple.com/app/id1452689527" target="_blank">
