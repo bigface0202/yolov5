@@ -14,10 +14,15 @@ def main(opt):
     time_range = np.arange(len(glob.glob(img_dir + "/*")) - 1) + 8
     for clock in time_range:
         imgs = glob.glob(os.path.join(img_dir, str(clock)) + "/*")
-        for i in range(15):
+        output_length = []
+        max_extract_imgs = 15
+        if len(imgs) < 15:
+            max_extract_imgs = len(imgs)
+        while len(output_length) < max_extract_imgs:
             img_num = random.randrange(len(imgs))
             os.makedirs("{}/{}".format(output_dir, clock), exist_ok=True)
             shutil.copy(imgs[img_num], "{}/{}/".format(output_dir, clock))
+            output_length = glob.glob("{}/{}/*".format(output_dir, clock))
 
 
 if __name__ == "__main__":
